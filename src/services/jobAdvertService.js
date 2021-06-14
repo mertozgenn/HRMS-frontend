@@ -9,19 +9,31 @@ export default class JobAdvertService{
         return axios.get("http://localhost:8080/api/jobadverts/getById?id=" + id)
     }
 
-    getAllActive(){
-        return axios.get("http://localhost:8080/api/jobadverts/getallActive")
+    getByEmployerId(id){
+        return axios.get("http://localhost:8080/api/jobadverts/getByEmployerId?id=" + id)
     }
 
-    getAllByActiveAndEmployer(employer){
-        return axios.get("http://localhost:8080/api/jobadverts/getallByActiveAndEmployer?employerId=" + employer)
+    getByNotApproved(){
+        return axios.get("http://localhost:8080/api/jobadverts/getByNotApproved")
     }
 
-    getAllByActiveSortedByDate(){
-        return axios.get("http://localhost:8080/api/jobadverts/getallByActiveSortedByDate")
+    getAllActiveApproved(){
+        return axios.get("http://localhost:8080/api/jobadverts/getallActiveAndApproved")
+    }
+
+    getallByActiveAndApprovedAndEmployer(employer){
+        return axios.get("http://localhost:8080/api/jobadverts/getallByActiveAndApprovedAndEmployer?employerId=" + employer)
+    }
+
+    getallByActiveAndApprovedSortedByDate(){
+        return axios.get("http://localhost:8080/api/jobadverts/getallByActiveAndApprovedSortedByDate")
     }
 
     add(jobAdvert){
         return axios.post("http://localhost:8080/api/jobadverts/add", jobAdvert)
+    }
+
+    update(jobAdvert){
+        return axios.post("http://localhost:8080/api/jobadverts/update", jobAdvert)
     }
 }

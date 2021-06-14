@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Icon, Menu, Table } from 'semantic-ui-react'
+import { NavLink } from 'react-router-dom'
+import { Button, Icon, Table } from 'semantic-ui-react'
 import JobseekerService from '../services/jobseekerService'
 
 export default function JobseekerList() {
@@ -30,7 +31,7 @@ export default function JobseekerList() {
                                 <Table.Cell>{jobseeker.lastName}</Table.Cell>
                                 <Table.Cell>{jobseeker.email}</Table.Cell>
                                 <Table.Cell width={3}>
-                                    <Button animated color="blue">
+                                    <Button as={NavLink} to={`/jobseekers/${jobseeker.id}`} primary animated color="blue">
                                         <Button.Content visible>Profili Görüntüle</Button.Content>
                                         <Button.Content hidden>
                                             <Icon name='arrow right' />
@@ -42,25 +43,6 @@ export default function JobseekerList() {
                     }
 
                 </Table.Body>
-
-                <Table.Footer>
-                    <Table.Row>
-                        <Table.HeaderCell colSpan='4'>
-                            <Menu floated='right' pagination>
-                                <Menu.Item as='a' icon>
-                                    <Icon name='chevron left' />
-                                </Menu.Item>
-                                <Menu.Item as='a'>1</Menu.Item>
-                                <Menu.Item as='a'>2</Menu.Item>
-                                <Menu.Item as='a'>3</Menu.Item>
-                                <Menu.Item as='a'>4</Menu.Item>
-                                <Menu.Item as='a' icon>
-                                    <Icon name='chevron right' />
-                                </Menu.Item>
-                            </Menu>
-                        </Table.HeaderCell>
-                    </Table.Row>
-                </Table.Footer>
             </Table>
         </div>
     )

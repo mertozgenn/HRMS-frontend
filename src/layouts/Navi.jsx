@@ -1,42 +1,61 @@
-import React from 'react'
-import { Button, Container, Dropdown, Menu } from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { NavLink, useHistory } from 'react-router-dom'
+import { Container, Menu } from 'semantic-ui-react'
+import SignedIn from './SignedIn'
+import SignedOut from './SignedOut'
 
 export default function Navi() {
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+    const [isEmployer, setIsEmployer] = useState(true)
+
+    const [isJobseeker, setIsJobseeker] = useState(true)
+
+    const [isSystemEmployer, setIsSystemEmployer] = useState(true)
+
+    const history = useHistory()
+
+    function handleSignOut() {
+        setIsAuthenticated(false)
+        history.push("/")
+    }
+
+    function handleSignIn() {
+        setIsAuthenticated(true)
+    }
     return (
         <div>
             <Menu inverted fixed="top">
                 <Container>
-                    <Menu.Item
-                        name='İş ilanları'
-                    />
-                    <Menu.Item
-                        name='İş verenler'
-                    />
-                    <Menu.Item
-                        name='İş arayanlar'
-                    />
-                    <Menu.Item
-                        name="Profilim"
-                    />
-                    <Menu.Item
-                        name="İş İlanı Ekle"
-                    />
-                    <Menu.Item
-                        name="Verdiğim İlanlar"
-                    />
+                    <Menu.Item as={NavLink} exact to="/" name='İş ilanları' />
+
+                    <Menu.Item as={NavLink} exact to="/employers" name='İş verenler' />
+
+                    <Menu.Item as={NavLink} exact to="/jobseekers" name='İş arayanlar' />
+
+                    {isJobseeker &&
+                        <Menu.Item as={NavLink} exact to="/profile" name="Profilim" />
+                    }
+
+                    {isEmployer &&
+                        <Menu.Item as={NavLink} exact to="/add/jobadvert" name="İş İlanı Ekle" />
+                    }
+
+                    {isEmployer &&
+                        <Menu.Item as={NavLink} exact to="/myAdverts" name="Verdiğim İlanlar" />
+                    }
+
+                    {isSystemEmployer &&
+                        <Menu.Item as={NavLink} exact to="/approve/jobadvert" name="İlanları Onayla" />
+                    }
+
+                    {isSystemEmployer &&
+                        <Menu.Item as={NavLink} exact to="/approve/employer" name="İş verenleri Onayla" />
+                    }
+
                     <Menu.Menu position='right'>
-                        <Dropdown item text='Hoşgeldiniz'>
-                            <Dropdown.Menu>
-                                <Dropdown.Item>Bilgileri Düzenle</Dropdown.Item>
-                                <Dropdown.Item>Çıkış Yap</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                        <Menu.Item>
-                            <Button primary>Giriş Yap</Button>
-                        </Menu.Item>
-                        <Menu.Item>
-                            <Button primary>Kayıt ol</Button>
-                        </Menu.Item>
+                        {isAuthenticated ? <SignedIn signOut={handleSignOut} /> : <SignedOut signIn={handleSignIn} />}
                     </Menu.Menu>
                 </Container>
             </Menu>

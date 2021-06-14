@@ -12,4 +12,15 @@ export default class EmployerService{
     getById(id){
         return axios.get("http://localhost:8080/api/employers/getById?id=" + id)
     }
+
+    getByNotApproved(){
+        return axios.get("http://localhost:8080/api/employers/getByNotApproved")
+    }
+    getByApproved(){
+        return axios.get("http://localhost:8080/api/employers/getByApproved")
+    }
+
+    update(employer){
+        return axios.post("http://localhost:8080/api/employers/update", employer)
+    }
 }

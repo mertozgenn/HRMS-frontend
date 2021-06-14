@@ -3,19 +3,15 @@ import JobseekerService from '../services/jobseekerService'
 import { Item, Card, Container, Header, Divider } from 'semantic-ui-react'
 import JobseekerCVService from '../services/jobseekerCVService'
 import ImageService from '../services/imageService'
+import { useParams } from 'react-router'
 
 export default function JobseekerProfile() {
-    const [jobseeker, setjobseeker] = useState({
-        id: 0,
-        firstName: "",
-        lastName: "",
-    })
 
-    const [CVInfo, setCVInfo] = useState({
-        githubAddress: "",
-        linkedinAddress: "",
-        coverLetter: ""
-    })
+    let { id } = useParams()
+
+    const [jobseeker, setjobseeker] = useState({})
+
+    const [CVInfo, setCVInfo] = useState({})
 
     const [jobseekerEducations, setjobseekerEducation] = useState([])
     const [jobseekerLanguages, setjobseekerLanguage] = useState([])
@@ -26,28 +22,30 @@ export default function JobseekerProfile() {
     useEffect(() => {
 
         let jobseekerCVService = new JobseekerCVService()
-        jobseekerCVService.getEducationsByUserIdSortedByGraduationYearDesc(1).then(result => setjobseekerEducation(result.data.data))
-        jobseekerCVService.getLanguagesByUserId(1).then(result => setjobseekerLanguage(result.data.data))
-        jobseekerCVService.getProgrammingLanguagesByUserId(1).then(result => setjobseekerProgrammingLanguages(result.data.data))
-        jobseekerCVService.getWorkExperiencesByUserIdSortedByQuitYearDesc(1).then(result => setworkExperiences(result.data.data))
-        jobseekerCVService.getByUserId(1).then(result => setCVInfo(result.data.data))
+        jobseekerCVService.getEducationsByUserIdSortedByGraduationYearDesc(id).then(result => setjobseekerEducation(result.data.data))
+        jobseekerCVService.getLanguagesByUserId(id).then(result => setjobseekerLanguage(result.data.data))
+        jobseekerCVService.getProgrammingLanguagesByUserId(id).then(result => setjobseekerProgrammingLanguages(result.data.data))
+        jobseekerCVService.getWorkExperiencesByUserIdSortedByQuitYearDesc(id).then(result => setworkExperiences(result.data.data))
+        jobseekerCVService.getByUserId(id).then(result => setCVInfo(result.data.data))
 
         let imageService = new ImageService()
-        imageService.getByUserId(1).then(result => setjobseekerImage("https://res.cloudinary.com/dex8fj7po/image/upload/v1622567361/" + result.data.data))
+        imageService.getByUserId(id).then(result => setjobseekerImage("https://res.cloudinary.com/dex8fj7po/image/upload/v1622567361/" + result.data.data)).catch(error =>{
+            console.log(error)
+        })
 
         let jobseekerService = new JobseekerService()
-        jobseekerService.getById(1).then(result => setjobseeker(result.data.data))
-    }, [])
+        jobseekerService.getById(id).then(result => setjobseeker(result.data.data))
+    }, [id])
     return (
         <div>
             <Item>
                 <Item.Image size="small" src={jobseekerImage} />
                 <Item.Content>
-                    <Item.Header as='h1'>{jobseeker.firstName} {jobseeker.lastName}</Item.Header>
+                    <Item.Header as='h1'>{jobseeker?.firstName} {jobseeker?.lastName}</Item.Header>
                     <Item.Description>
-                        <p>{CVInfo.coverLetter}</p>
-                        <p>GitHub Address : <a href={"https://www." + CVInfo.githubAddress}>{CVInfo.githubAddress}</a></p>
-                        <p>LinkedIn Address : <a href={"https://www." + CVInfo.linkedinAddress}>{CVInfo.linkedinAddress}</a></p>
+                        <p>{CVInfo?.coverLetter}</p>
+                        <p>GitHub Address : <a href={"https://www." + CVInfo?.githubAddress}>{CVInfo?.githubAddress}</a></p>
+                        <p>LinkedIn Address : <a href={"https://www." + CVInfo?.linkedinAddress}>{CVInfo?.linkedinAddress}</a></p>
                     </Item.Description>
                 </Item.Content>
             </Item>
