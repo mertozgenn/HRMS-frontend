@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { NavLink, useHistory } from 'react-router-dom'
 import { Container, Menu } from 'semantic-ui-react'
 import SignedIn from './SignedIn'
 import SignedOut from './SignedOut'
+import Favorites from './Favorites'
 
 export default function Navi() {
+
+    const {favoriteAdverts} = useSelector(state => state.favorites)
 
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
@@ -55,6 +59,9 @@ export default function Navi() {
                     }
 
                     <Menu.Menu position='right'>
+                        {favoriteAdverts.length > 0 &&
+                            <Favorites />
+                        }
                         {isAuthenticated ? <SignedIn signOut={handleSignOut} /> : <SignedOut signIn={handleSignIn} />}
                     </Menu.Menu>
                 </Container>

@@ -25,8 +25,12 @@ export default class JobAdvertService{
         return axios.get("http://localhost:8080/api/jobadverts/getallByActiveAndApprovedAndEmployer?employerId=" + employer)
     }
 
-    getallByActiveAndApprovedSortedByDate(){
-        return axios.get("http://localhost:8080/api/jobadverts/getallByActiveAndApprovedSortedByDate")
+    getallByActiveAndApprovedSortedByDate(pageNo, pageSize){
+        return axios.get("http://localhost:8080/api/jobadverts/getallByActiveAndApprovedSortedByDate?pageNo=" + pageNo + "&pageSize=" + pageSize)
+    }
+
+    getPageCount(pageSize){
+        return axios.get("http://localhost:8080/api/jobadverts/getPageCount?pageSize=" + pageSize)
     }
 
     add(jobAdvert){

@@ -15,8 +15,9 @@ export default function JobAdvertListToApprove() {
     function handleApprove(jobAdvert) {
         jobAdvert.approved = true
         let jobAdvertService = new JobAdvertService()
-        jobAdvertService.update(jobAdvert)
-        window.location.reload()
+        jobAdvertService.update(jobAdvert).then(()=>{
+            jobAdvertService.getByNotApproved().then(result => setjobAdverts(result.data.data))
+        })
     }
 
     return (

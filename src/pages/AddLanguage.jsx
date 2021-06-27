@@ -1,6 +1,9 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form} from 'formik';
 import React from 'react'
 import LanguageService from '../services/languageService'
+import * as Yup from "yup"
+import HRMSTextInput from "../utilities/customFormControls/HRMSTextInput"
+import { Button } from 'semantic-ui-react';
 
 export default function AddLanguage() {
 
@@ -14,22 +17,17 @@ export default function AddLanguage() {
             <h2>Sisteme Dil Ekle</h2>
             <Formik
                 initialValues={{ name: ''}}
-                validate={values => {
-                    const errors = {};
-                    if (!values.name) {
-                        errors.name = 'Required';
-                    }
-                    return errors;
-                }}
+                validationSchema={Yup.object({
+                    name : Yup.string().required("Dil İsmi Gerekli")
+                })}
                 onSubmit= {(values) => handleSubmit(values)}
             >
                 {({ isSubmitting }) => (
-                        <Form>
-                        <Field type="text" name="name" placeholder="Dil adı"/>
-                        <ErrorMessage name="name" component="div" />
-                        <button type="submit" disabled={isSubmitting}>
+                        <Form class="ui form">
+                        <HRMSTextInput placeholder="Dil adı" name="name"/>
+                        <Button primary type="submit" disabled={isSubmitting}>
                             Sisteme Kaydet
-                        </button>
+                        </Button>
                     </Form>
                 )}
             </Formik>

@@ -18,10 +18,13 @@ import UpdateJobseekerCV from "../pages/UpdateJobseekerCV"
 import JobAdvertListToApprove from '../pages/JobAdvertListToApprove'
 import EmployerListToApprove from '../pages/EmployerListToApprove'
 import EmployerJobAdverts from '../pages/EmployerJobAdverts'
+import UpdateProfile from '../pages/UpdateProfile'
+import { ToastContainer } from 'react-toastify'
 
 export default function Dashboard() {
     return (
         <div>
+            <ToastContainer position="bottom-right"/>
             <Route exact path="/" component={JobAdvertList}/>
             <Route exact path="/jobadverts" component={JobAdvertList}/>
             <Route exact path="/employers" component={EmployerList}/>
@@ -41,6 +44,7 @@ export default function Dashboard() {
             <Route exact path="/approve/jobadvert" component={JobAdvertListToApprove}/>
             <Route exact path="/approve/employer" component={EmployerListToApprove}/>
             <Route exact path="/myAdverts" component={EmployerJobAdverts}/>
+            <Route exact path="/update-profile" component={UpdateProfile}/>
         </div>
     )
 }

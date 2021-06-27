@@ -1,6 +1,9 @@
-import React from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik';
 import WorkplaceService from '../services/workplaceService'
+import { Formik, Form} from 'formik';
+import React from 'react'
+import * as Yup from "yup"
+import HRMSTextInput from "../utilities/customFormControls/HRMSTextInput"
+import { Button } from 'semantic-ui-react';
 
 export default function AddWorkplace() {
     function handleSubmit(workplace) {
@@ -11,23 +14,18 @@ export default function AddWorkplace() {
         <div>
             <h2>Sisteme İş Yeri Ekle</h2>
             <Formik
-                initialValues={{ name: '' }}
-                validate={values => {
-                    const errors = {};
-                    if (!values.name) {
-                        errors.name = 'Required';
-                    }
-                    return errors;
-                }}
-                onSubmit={(values) => handleSubmit(values)}
+                initialValues={{ name: ''}}
+                validationSchema={Yup.object({
+                    name : Yup.string().required("İş Yeri İsmi Gerekli")
+                })}
+                onSubmit= {(values) => handleSubmit(values)}
             >
                 {({ isSubmitting }) => (
-                    <Form>
-                        <Field type="text" name="name" placeholder="İş yeri adı" />
-                        <ErrorMessage name="name" component="div" />
-                        <button type="submit" disabled={isSubmitting}>
+                        <Form class="ui form">
+                        <HRMSTextInput placeholder="İş yeri adı" name="name"/>
+                        <Button primary type="submit" disabled={isSubmitting}>
                             Sisteme Kaydet
-                        </button>
+                        </Button>
                     </Form>
                 )}
             </Formik>

@@ -11,19 +11,21 @@ export default function EmployerJobAdverts() {
         jobAdvertService.getByEmployerId(6).then(result => setjobAdverts(result.data.data))
     }, [])
 
-    function handlePassive(jobAdvert) {
+    function handleMakePassive(jobAdvert) {
         jobAdvert.active = false
         console.log(jobAdvert)
         let jobAdvertService = new JobAdvertService()
-        jobAdvertService.update(jobAdvert)
-        window.location.reload()
+        jobAdvertService.update(jobAdvert).then(()=>{
+            jobAdvertService.getByEmployerId(6).then(result => setjobAdverts(result.data.data))
+        })
     }
 
-    function handleActive(jobAdvert) {
+    function handleMakeActive(jobAdvert) {
         jobAdvert.active = true
         let jobAdvertService = new JobAdvertService()
-        jobAdvertService.update(jobAdvert)
-        window.location.reload()
+        jobAdvertService.update(jobAdvert).then(()=>{
+            jobAdvertService.getByEmployerId(6).then(result => setjobAdverts(result.data.data))
+        })
     }
 
     return (
@@ -51,7 +53,7 @@ export default function EmployerJobAdverts() {
                                 <Table.Cell>{jobAdvert.applicationDeadline.substring(0, 10)}</Table.Cell>
                                 {jobAdvert.active &&
                                     <Table.Cell>
-                                        <Button color="red" onClick={()=> handlePassive(jobAdvert)} animated>
+                                        <Button color="red" onClick={()=> handleMakePassive(jobAdvert)} animated>
                                             <Button.Content visible>Pasifleştir</Button.Content>
                                             <Button.Content hidden>
                                                 <Icon name='close' />
@@ -62,7 +64,7 @@ export default function EmployerJobAdverts() {
 
                                 {!jobAdvert.active &&
                                     <Table.Cell>
-                                        <Button color="green" onClick={()=> handleActive(jobAdvert)} animated>
+                                        <Button color="green" onClick={()=> handleMakeActive(jobAdvert)} animated>
                                             <Button.Content visible>Aktifleştir</Button.Content>
                                             <Button.Content hidden>
                                                 <Icon name='check' />

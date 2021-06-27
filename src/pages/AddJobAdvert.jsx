@@ -5,6 +5,9 @@ import JobAdvertService from '../services/jobAdvertService'
 import CityService from '../services/cityService'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useHistory } from 'react-router-dom'
+import * as Yup from "yup"
+import HRMSSelectInput from "../utilities/customFormControls/HRMSSelectInput"
+import HRMSTextInput from "../utilities/customFormControls/HRMSTextInput"
 
 export default function AddJobAdvert() {
 
@@ -36,70 +39,42 @@ export default function AddJobAdvert() {
                     applicationDeadline: '', cityId: '', jobDescription: '', remoteWork: false,
                     workplaceWork: false, fullTime: false, partTime: false
                 }}
-                validate={values => {
-                    const errors = {};
-                    if (!values.positionId) {
-                        errors.positionId = 'Required';
-                    }
-                    if (!values.openPosition) {
-                        errors.openPosition = 'Required';
-                    }
-                    if (!values.cityId) {
-                        errors.cityId = 'Required';
-                    }
-                    if (!values.applicationDeadline) {
-                        errors.applicationDeadline = 'Required';
-                    }
-                    if (!values.jobDescription) {
-                        errors.jobDescription = 'Required';
-                    }
-                    return errors;
-                }}
+                validationSchema={Yup.object({
+                    positionId : Yup.number().required("Pozisyon gerekli"),
+                    openPosition : Yup.number().required("Açık pozisyon sayısı gerekli"),
+                    applicationDeadline : Yup.date().required("Son başvuru tarihi gerekli"),
+                    cityId : Yup.number().required("Şehir gerekli"),
+                    jobDescription : Yup.string().required("Açıklama gerekli")
+                })}
                 onSubmit={(values) => handleSubmit(values)}
             >
                 {({ isSubmitting }) => (
-                    <Form>
+                    <Form className="ui form">
                         <Grid>
                             <Grid.Row>
                                 <Grid.Column width={2}>
                                     <label>Pozisyon:</label>
-                                    <Field as="select"
-                                        name="positionId"
-                                    >
-                                        {
-                                            positions.map(position => (<option key={position.id} value={parseInt(position.id)}>{position.name}</option>))
-                                        }
-                                    </Field>
-                                    <ErrorMessage name="positionId" component="div" />
+                                    <HRMSSelectInput name="positionId" list={positions}/>
                                 </Grid.Column>
                                 <Grid.Column width={3}>
                                     <label>Açık Pozisyon Sayısı:</label>
-                                    <Field type="number" name="openPosition" placeholder="Açık Pozisyon" />
-                                    <ErrorMessage name="openPosition" component="div" />
+                                    <HRMSTextInput type="number" name="openPosition" placeholder="Açık Pozisyon" />
                                 </Grid.Column>
                                 <Grid.Column width={2}>
                                     <label>Minimum Maaş:</label>
-                                    <Field type="number" name="minimumSalary" placeholder="Minimum Maaş" />
+                                    <HRMSTextInput type="number" name="minimumSalary" placeholder="Minimum Maaş" />
                                 </Grid.Column>
                                 <Grid.Column width={3}>
                                     <label>Maksimum Maaş:</label>
-                                    <Field type="number" name="maximumSalary" placeholder="Maksimum Maaş" />
+                                    <HRMSTextInput type="number" name="maximumSalary" placeholder="Maksimum Maaş" />
                                 </Grid.Column>
                                 <Grid.Column width={2}>
                                     <label>Şehir:</label>
-                                    <Field as="select"
-                                        name="cityId"
-                                    >
-                                        {
-                                            cities.map(city => (<option key={city.id} value={parseInt(city.id)}>{city.name}</option>))
-                                        }
-                                    </Field>
-                                    <ErrorMessage name="cityId" component="div" />
+                                    <HRMSSelectInput name="cityId" list={cities}/>
                                 </Grid.Column>
                                 <Grid.Column width={3}>
                                     <label>Son başvuru Tarihi:</label>
-                                    <Field type="date" name="applicationDeadline" />
-                                    <ErrorMessage name="applicationDeadline" component="div" />
+                                    <HRMSTextInput type="date" name="applicationDeadline" />
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>

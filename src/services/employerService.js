@@ -5,6 +5,14 @@ export default class EmployerService{
         return axios.get("http://localhost:8080/api/employers/getall")
     }
 
+    getAllPendingUpdates(){
+        return axios.get("http://localhost:8080/api/employers/getallPendingUpdates")
+    }
+
+    getPendingUpdatesByUserId(userId){
+        return axios.get("http://localhost:8080/api/employers/getPendingUpdatesByUserId?userId=" + userId)
+    }
+
     getByEmail(email){
         return axios.get("http://localhost:8080/api/employers/getByEmail?email=" + email)
     }
@@ -20,7 +28,11 @@ export default class EmployerService{
         return axios.get("http://localhost:8080/api/employers/getByApproved")
     }
 
-    update(employer){
-        return axios.post("http://localhost:8080/api/employers/update", employer)
+    update(employerToUpdate){
+        return axios.post("http://localhost:8080/api/employers/update", employerToUpdate)
+    }
+
+    confirmUpdate(employerToUpdate){
+        return axios.post("http://localhost:8080/api/employers/confirmUpdate", employerToUpdate)
     }
 }
