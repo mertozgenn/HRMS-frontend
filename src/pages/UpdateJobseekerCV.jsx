@@ -80,7 +80,7 @@ export default function UpdateJobseekerCV() {
         if (image !== null) {
             let formData = new FormData();
             formData.append('file', image);
-            if (formData.get("file") != "undefined") {
+            if (formData.get("file") !== "undefined") {
                 let imageService = new ImageService()
                 imageService.add(formData, 1).then(() => {
                     imageService.getByUserId(1).then(result => setjobseekerImage("https://res.cloudinary.com/dex8fj7po/image/upload/v1622567361/" + result.data.data))

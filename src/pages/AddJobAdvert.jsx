@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Grid, TextArea } from 'semantic-ui-react'
+import { Button, Divider, Grid, Header, Segment, TextArea } from 'semantic-ui-react'
 import PositionService from '../services/positionService'
 import JobAdvertService from '../services/jobAdvertService'
 import CityService from '../services/cityService'
@@ -32,7 +32,8 @@ export default function AddJobAdvert() {
     }, [])
     return (
         <div>
-            <h2>İş İlanı Ekle</h2>
+            <Header style={{marginTop:"0.5em"}} as="h2" > İş İlanı Ekle</Header>
+            <Divider />
             <Formik
                 initialValues={{
                     positionId: '', openPosition: '', minimumSalary: '', maximumSalary: '',
@@ -40,81 +41,81 @@ export default function AddJobAdvert() {
                     workplaceWork: false, fullTime: false, partTime: false
                 }}
                 validationSchema={Yup.object({
-                    positionId : Yup.number().required("Pozisyon gerekli"),
-                    openPosition : Yup.number().required("Açık pozisyon sayısı gerekli"),
-                    applicationDeadline : Yup.date().required("Son başvuru tarihi gerekli"),
-                    cityId : Yup.number().required("Şehir gerekli"),
-                    jobDescription : Yup.string().required("Açıklama gerekli")
+                    positionId: Yup.number().required("Pozisyon gerekli"),
+                    openPosition: Yup.number().required("Açık pozisyon sayısı gerekli"),
+                    applicationDeadline: Yup.date().required("Son başvuru tarihi gerekli"),
+                    cityId: Yup.number().required("Şehir gerekli"),
+                    jobDescription: Yup.string().required("Açıklama gerekli")
                 })}
                 onSubmit={(values) => handleSubmit(values)}
             >
                 {({ isSubmitting }) => (
                     <Form className="ui form">
-                        <Grid>
-                            <Grid.Row>
-                                <Grid.Column width={2}>
-                                    <label>Pozisyon:</label>
-                                    <HRMSSelectInput name="positionId" list={positions}/>
-                                </Grid.Column>
-                                <Grid.Column width={3}>
-                                    <label>Açık Pozisyon Sayısı:</label>
-                                    <HRMSTextInput type="number" name="openPosition" placeholder="Açık Pozisyon" />
-                                </Grid.Column>
-                                <Grid.Column width={2}>
-                                    <label>Minimum Maaş:</label>
-                                    <HRMSTextInput type="number" name="minimumSalary" placeholder="Minimum Maaş" />
-                                </Grid.Column>
-                                <Grid.Column width={3}>
-                                    <label>Maksimum Maaş:</label>
-                                    <HRMSTextInput type="number" name="maximumSalary" placeholder="Maksimum Maaş" />
-                                </Grid.Column>
-                                <Grid.Column width={2}>
-                                    <label>Şehir:</label>
-                                    <HRMSSelectInput name="cityId" list={cities}/>
-                                </Grid.Column>
-                                <Grid.Column width={3}>
-                                    <label>Son başvuru Tarihi:</label>
-                                    <HRMSTextInput type="date" name="applicationDeadline" />
-                                </Grid.Column>
-                            </Grid.Row>
+                        <Grid padded centered>
+                            <p />
+                            <Segment style={{ padding: '1m 1em', minWidth: 100 }}>
+                                <label>Pozisyon:</label>
+                                <HRMSSelectInput name="positionId" list={positions} />
+
+                                <label>Açık Pozisyon Sayısı:</label>
+                                <HRMSTextInput type="number" name="openPosition" placeholder="Açık Pozisyon" />
+                            </Segment>
+
+                            <Segment style={{ minHeight: 100, padding: '1em 1em', minWidth: 100 }}>
+                                <label>Minimum Maaş:</label>
+                                <HRMSTextInput type="number" name="minimumSalary" placeholder="Minimum Maaş" />
+
+                                <label>Maksimum Maaş:</label>
+                                <HRMSTextInput type="number" name="maximumSalary" placeholder="Maksimum Maaş" />
+                            </Segment>
+                            <Segment style={{ padding: '1em 1em', minWidth: 100 }}>
+                                <label>Şehir:</label>
+                                <HRMSSelectInput name="cityId" list={cities} />
+                            </Segment>
+
+                            <Segment style={{ maxHeight: 100, padding: '1em 1em', minWidth: 100 }}>
+                                <label>Son başvuru Tarihi:</label>
+                                <HRMSTextInput type="date" name="applicationDeadline" />
+                            </Segment>
+
                         </Grid>
-                        <Grid>
-                            <Grid.Row>
-                                <Grid.Column width={3}>
+                        <Grid container padded centered>
+                            <Grid.Column width="6">
+                                <Segment style={{ padding: '1em 1em' }}>
                                     <label>
                                         <Field type="checkbox" name="remoteWork" />
                                         Uzaktan çalışmaya uygun
                                     </label>
-                                </Grid.Column>
-                                <Grid.Column width={3}>
+                                    <p />
                                     <label>
                                         <Field type="checkbox" name="workplaceWork" />
                                         İş yerinde çalışmaya uygun
                                     </label>
-                                </Grid.Column>
-                                <Grid.Column width={3}>
+                                </Segment>
+                            </Grid.Column>
+                            <Grid.Column width="5">
+                                <Segment style={{ padding: '1em 1em'}}>
                                     <label>
                                         <Field type="checkbox" name="fullTime" />
                                         Tam Zamanlı
                                     </label>
-                                </Grid.Column>
-                                <Grid.Column width={3}>
+
                                     <label>
                                         <Field type="checkbox" name="partTime" />
                                         Yarı Zamanlı
                                     </label>
-                                </Grid.Column>
-                            </Grid.Row>
+                                </Segment>
+                            </Grid.Column>
                         </Grid>
                         <p />
                         <label>Açıklamalar</label>
                         <p />
-                        <Field as={TextArea} style={{ minHeight: 300, minWidth: 1000 }} name="jobDescription" />
+                        <Field as={TextArea} style={{ minHeight: 300, minWidth: 100 }} name="jobDescription" />
                         <p />
                         <ErrorMessage name="jobDescription" component="div" />
-                        <button type="submit" disabled={isSubmitting}>
+                        <Button type="submit" disabled={isSubmitting}>
                             Sisteme Kaydet
-                        </button>
+                        </Button>
                     </Form>
                 )}
             </Formik>

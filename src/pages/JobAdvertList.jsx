@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Icon, Table, Button, Menu, Grid } from 'semantic-ui-react'
+import { Icon, Table, Button, Menu, Grid, Modal } from 'semantic-ui-react'
 import JobAdvertService from '../services/jobAdvertService'
 import JobAdvertFilter from './JobAdvertFilter'
 
-export default function JobAdvertList() {
+export default function JobAdvertList({ mobile }) {
 
     const [jobAdverts, setjobAdverts] = useState([])
     const [pages, setPages] = useState([])
     const [pageSize, setPageSize] = useState(10)
+    const [open, setOpen] = useState(false)
 
     useEffect(() => {
         let jobAdvertService = new JobAdvertService()
@@ -43,14 +44,31 @@ export default function JobAdvertList() {
             setPages(pages)
         })
     }
+
+    function handleOpen() {
+        setOpen(true)
+    }
+    function handleClose() {
+        setOpen(false)
+    }
     return (
         <div>
-            <Grid>
+            {mobile === true &&
+            <Button color="grey" onClick={()=> handleOpen()}>
+                Filtrele
+            </Button>
+            }
+            <Modal open={open} onClose={()=>handleClose()} closeIcon closeOnDimmerClick closeOnTriggerClick closeOnTriggerBlur>
+                    <JobAdvertFilter setjobAdverts={setjobAdverts} jobAdverts={jobAdverts} pageSize={pageSize} handleChangePageSize={handleChangePageSize} />
+            </Modal>
+
+            <Grid padded>
                 <Grid.Row>
-                    <Grid.Column width="4">
-                        <JobAdvertFilter setjobAdverts={setjobAdverts} jobAdverts={jobAdverts} pageSize={pageSize} handleChangePageSize={handleChangePageSize} />
-                    </Grid.Column>
-                    <Grid.Column width="12">
+                    {mobile === false &&
+                        <Grid.Column width="4">
+                            <JobAdvertFilter setjobAdverts={setjobAdverts} jobAdverts={jobAdverts} pageSize={pageSize} handleChangePageSize={handleChangePageSize} />
+                        </Grid.Column>}
+                    <Grid.Column width={mobile === false ? "12" : "16"}>
                         <Table celled>
                             <Table.Header>
                                 <Table.Row>
