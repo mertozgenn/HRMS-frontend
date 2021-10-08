@@ -7,7 +7,7 @@ import SignedOut from './SignedOut'
 import Favorites from './Favorites'
 
 export default function DesktopNavi() {
-    const {favoriteAdverts} = useSelector(state => state.favorites)
+    const { favoriteAdverts } = useSelector(state => state.favorites)
 
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
@@ -39,62 +39,61 @@ export default function DesktopNavi() {
     }
     return (
         <div>
-           
-                <Visibility
-                    once={false}
-                    onBottomPassed={showFixedMenu}
-                    onBottomPassedReverse={hideFixedMenu}
+            <Visibility
+                once={false}
+                onBottomPassed={showFixedMenu}
+                onBottomPassedReverse={hideFixedMenu}
+            >
+                <Segment
+                    inverted
+                    textAlign='center'
+                    vertical
                 >
-                    <Segment
-                        inverted
-                        textAlign='center'
-                        vertical
+                    <Menu
+                        fixed={fixed ? 'top' : null}
+                        inverted={!fixed}
+                        pointing={!fixed}
+                        secondary={!fixed}
                     >
-                        <Menu
-                            fixed={fixed ? 'top' : null}
-                            inverted={!fixed}
-                            pointing={!fixed}
-                            secondary={!fixed}
-                        >
-                            <Container>
-                                <Menu.Item as={NavLink} exact to="/" name='Ana sayfa' />
+                        <Container>
+                            <Menu.Item as={NavLink} exact to="/" name='Ana sayfa' />
 
-                                <Menu.Item as={NavLink} exact to="/jobadverts" name='İş ilanları' />
+                            <Menu.Item as={NavLink} exact to="/jobadverts" name='İş ilanları' />
 
-                                <Menu.Item as={NavLink} exact to="/employers" name='İşverenler' />
+                            <Menu.Item as={NavLink} exact to="/employers" name='İşverenler' />
 
-                                <Menu.Item as={NavLink} exact to="/jobseekers" name='İş arayanlar' />
+                            <Menu.Item as={NavLink} exact to="/jobseekers" name='İş arayanlar' />
 
-                                {isJobseeker &&
-                                    <Menu.Item as={NavLink} exact to="/profile" name="Profilim" />
+                            {isJobseeker &&
+                                <Menu.Item as={NavLink} exact to="/profile" name="Profilim" />
+                            }
+
+                            {isEmployer &&
+                                <Menu.Item as={NavLink} exact to="/add/jobadvert" name="İş İlanı Ekle" />
+                            }
+
+                            {isEmployer &&
+                                <Menu.Item as={NavLink} exact to="/myAdverts" name="Verdiğim İlanlar" />
+                            }
+
+                            {isSystemEmployer &&
+                                <Menu.Item as={NavLink} exact to="/approve/jobadvert" name="İlanları Onayla" />
+                            }
+
+                            {isSystemEmployer &&
+                                <Menu.Item as={NavLink} exact to="/approve/employer" name="İşverenleri Onayla" />
+                            }
+
+                            <Menu.Menu position='right'>
+                                {favoriteAdverts.length > 0 &&
+                                    <Favorites />
                                 }
-
-                                {isEmployer &&
-                                    <Menu.Item as={NavLink} exact to="/add/jobadvert" name="İş İlanı Ekle" />
-                                }
-
-                                {isEmployer &&
-                                    <Menu.Item as={NavLink} exact to="/myAdverts" name="Verdiğim İlanlar" />
-                                }
-
-                                {isSystemEmployer &&
-                                    <Menu.Item as={NavLink} exact to="/approve/jobadvert" name="İlanları Onayla" />
-                                }
-
-                                {isSystemEmployer &&
-                                    <Menu.Item as={NavLink} exact to="/approve/employer" name="İşverenleri Onayla" />
-                                }
-
-                                <Menu.Menu position='right'>
-                                    {favoriteAdverts.length > 0 &&
-                                        <Favorites />
-                                    }
-                                    {isAuthenticated ? <SignedIn signOut={handleSignOut} /> : <SignedOut signIn={handleSignIn} />}
-                                </Menu.Menu>
-                            </Container>
-                        </Menu>
-                    </Segment>
-                </Visibility>
+                                {isAuthenticated ? <SignedIn signOut={handleSignOut} /> : <SignedOut signIn={handleSignIn} />}
+                            </Menu.Menu>
+                        </Container>
+                    </Menu>
+                </Segment>
+            </Visibility>
         </div>
     )
 }
