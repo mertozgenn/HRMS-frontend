@@ -1,6 +1,40 @@
-![](https://user-images.githubusercontent.com/78684195/121231763-79908d00-c899-11eb-9347-3116fe2e9d85.jpeg)
+![](https://user-images.githubusercontent.com/78684195/137592484-dc780b7f-973b-410f-a62b-c0879013c34f.png)
 
-> UML Component Diagram
+> Homepage
+
+![](https://user-images.githubusercontent.com/78684195/137592508-e177310a-5119-4cc9-83ae-d478121c88ed.png)
+
+> Homepage (Mobile)
+
+![](https://user-images.githubusercontent.com/78684195/137592544-006b0a3b-73b0-4652-9a14-046bc47a2d4d.png)
+
+> Job Advert List
+
+![](https://user-images.githubusercontent.com/78684195/137592589-6a3086f5-c256-410d-9749-05668a262dfd.png)
+
+> Job Advert List (Mobile)
+
+![](https://user-images.githubusercontent.com/78684195/137592856-cb2ae6cf-6926-4e8d-8165-933df891cda2.png)
+
+> Job Advert Detail
+
+![](https://user-images.githubusercontent.com/78684195/137592635-32c14790-1684-4ed0-a694-37ab386c6483.png)
+
+> Jobseeker Profile
+
+![](https://user-images.githubusercontent.com/78684195/137592953-816cb0ae-63a7-4f77-b34f-24445ff6236f.png)
+
+> Edit Jobseeker Profile
+
+![](https://user-images.githubusercontent.com/78684195/137593032-0511b348-0aa9-4f4d-b05b-c4b99f9dbfad.png)
+
+> Add Job Advert
+
+![](https://user-images.githubusercontent.com/78684195/137592750-d325900b-fa61-4a4b-8cf4-3ac87988e96b.png)
+
+> Register
+
+
 
 # Getting Started with Create React App
 
